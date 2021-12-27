@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+	<br><br><br><br>
+	<form>
+		<div>
+			<textarea type="text" name="date" class="form-control" id="text1"></textarea>
+		</div>
+		<div>
+			<button onclick="saveTextAsFile(text1.value,'download.txt')">Download</button>
+		</div>
+	</form>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			
+		})
+
+		function saveTextAsFile(textToWrite, fileNameToSaveAs) {
+		    var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+		    var downloadLink = document.createElement("a");
+		    downloadLink.download = fileNameToSaveAs;
+		    downloadLink.innerHTML = "Download File";
+		    if (window.webkitURL != null) {
+		    // Chrome allows the link to be clicked
+		    // without actually adding it to the DOM.
+		    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+		    }
+		    else {
+		    // Firefox requires the link to be added to the DOM
+		    // before it can be clicked.
+		    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		    downloadLink.onclick = destroyClickedElement;
+		    downloadLink.style.display = "none";
+		    document.body.appendChild(downloadLink);
+		    }
+		     
+		    downloadLink.click();
+		}
+	</script>
+</body>
+</html>
